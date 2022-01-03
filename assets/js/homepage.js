@@ -1,5 +1,10 @@
-function getUsersRepos() {
-    fetch("https://api.github.com/users/octocat/repos");
-};
+function getUsersRepos(user) {
+    var apiUrl = "https://api.github.com/users/" + user + "/repos";
 
-getUsersRepos();
+    fetch(apiUrl).then(function (response) {
+        response.json().then(function (data) {
+            console.log(data);
+        })
+    });
+};
+getUsersRepos("haguermeister");
