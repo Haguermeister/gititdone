@@ -14,7 +14,7 @@ function getRepoIssues(repo) {
             });
         }
         else {
-            alert("There is a hole in the bottom of the sea.");
+            document.location.replace("./index.html");
         }
     });
 }
@@ -57,7 +57,12 @@ function displayWarning(repo) {
 function getRepoName() {
     var repoName = document.location.search;
     repoName = repoName.split("=")[1];
-    getRepoIssues(repoName);
-    repoNameEl.textContent = repoName;
+    if (repoName) {
+        getRepoIssues(repoName);
+        repoNameEl.textContent = repoName;
+    }
+    else {
+        document.location.replace("./index.html");
+    }
 }
 getRepoName();
