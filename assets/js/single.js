@@ -1,4 +1,5 @@
 var issueContainerEl = document.querySelector("#issues-container");
+var limitWarningEl = document.querySelector("#limit-warning");
 
 function getRepoIssues(repo) {
     var apiUrl = "https://api.github.com/repos/" + repo + "/issues?dicrection=asc";
@@ -6,6 +7,10 @@ function getRepoIssues(repo) {
         if (response.ok) {
             response.json().then(function (data) {
                 displayIssues(data);
+
+                if (response.headers.get("Link")) {
+                    displayWarning(repo);
+                }
             });
         }
         else {
@@ -41,4 +46,12 @@ function displayIssues(issues) {
         issueContainerEl.appendChild(issueEl);
     }
 }
-getRepoIssues("haguermeister/pro-portfolio");
+function displayWarning(repo) {
+    limitWarningEl.textContent = "To see more than 30 isssues, visit ";
+    var linkEl = document.createElement("a");
+    linkEl.textContent = "See More Issues on GitHub.com";
+    linkEl.setAttribute("href", "https://github.com/" + repo + "/issues");
+    linkEl.setAttribute("target", "_blank");
+    limitWarningEl.appendChild(linkEl);
+}
+getRepoIssues("facebook/react");
